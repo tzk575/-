@@ -1,0 +1,133 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+#include <map>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+using namespace std;
+
+#define MAXSIZE 100
+typedef int ElemType;
+
+struct SqList
+{
+	ElemType data[MAXSIZE];
+	int len;
+};
+
+void InitList(SqList &L,int n)
+{
+	L.len=n;
+	int i=0;
+	int a;
+	cout << "请输入该顺序表元素: " << endl;
+	for (int i = 0; i < L.len; ++i)
+	{
+		cin >> a;
+		L.data[i]=a;
+	}
+}
+// 1
+void togther(SqList &L,SqList L1,SqList L2)
+{
+	L.len=L1.len+L2.len;
+	int i=0;
+	int m=0,n=0;
+	while(m<L1.len && n<L2.len)
+	{
+		if(L1.data[m]<L2.data[n])
+		{
+			L.data[i]=L1.data[m];
+			i++;
+			m++;
+		}
+		if(L1.data[m]>L2.data[n])
+		{
+			L.data[i]=L2.data[n];
+			i++;
+			n++;
+		}
+		if(L1.data[m]==L2.data[n])
+		{
+			L.data[i]=L1.data[m];
+			L.data[i+1]=L2.data[n];
+			m++;
+			n++;
+			i+=2;
+		}
+	}
+	while(m<L1.len)
+	{
+		L.data[n+m]=L1.data[m];
+		i++;
+		m++;
+	}
+	while(n<L2.len)
+	{
+		L.data[n+m]=L2.data[n];
+		i++;
+		n++;
+	}
+}
+//2
+void change(SqList &L)
+{
+	int i,j,k;
+	i=0;
+	j=L.len-1;
+	ElemType a;
+	while(i<j)
+	{
+		while(L.data[i]%2==1) i++;
+		while(L.data[j]%2==0) j--;
+		if(i<j)
+		{
+			a=L.data[i];
+			L.data[i]=L.data[j];
+			L.data[j]=a;
+		}
+	}
+}
+
+void print(SqList &L)
+{
+	int i=0;
+	while(i<L.len)
+	{
+		cout << L.data[i] << ' ';
+		i++;
+	}
+}
+
+int main()
+{
+	//1
+	/*
+	SqList A,B,C;
+	int m,n;
+	cout << "请输入顺序表A长度: ";
+	cin >> m;
+	InitList(A,m);
+	cout << "请输入顺序表B长度: ";
+	cin >> n;
+	InitList(B,n);
+	togther(C,A,B);
+	cout << "归并后结果为: ";
+	print(C);
+	*/
+	
+	//2
+	/*
+	SqList D;
+	int i;
+	cout << "请输入顺序表D长度: ";
+	cin >> i;
+	InitList(D,i);
+	change(D);
+	cout << "交换后结果为: ";
+	print(D);
+	*/
+}
