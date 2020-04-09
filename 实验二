@@ -1,0 +1,128 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+#include <map>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+using namespace std;
+
+//srand(time(0));
+typedef int ElemType;
+
+typedef struct LNode
+{
+	ElemType data;
+	struct LNode *next;
+}*LinkList;
+
+void InitList(LinkList &L)
+{
+	L = new LNode;
+	L->next = NULL;
+}
+void creat(LinkList &L,int n)
+{
+
+	InitList(L);
+	LinkList r;
+	r=L;
+	int shu;
+	cin>>shu;
+	L->data=shu;
+	for (int i=0;i<n-1;i++)
+	{
+		cin>>shu;
+		LinkList p;
+		p=new LNode;
+		p->data=shu;
+		p->next=r->next;
+		r->next=p;
+		r=p;
+	}
+}
+int Max(LinkList &L)
+{
+	int max,l=1;
+	LinkList p;
+	p=L;
+	max=p->data;
+	while(p->next)
+	{
+		p=p->next;
+		if(max<p->data)
+		{
+			l++;
+			max=p->data;
+		}
+	}
+	return l;
+}
+void print1(LinkList &L)
+{
+	LinkList p;
+	p=L;
+	int a;
+	int num=1;
+	while(p->next)
+	{
+		a=p->data;
+		cout << "结点" << num << ": " << a << endl;
+		p=p->next;
+		num++;
+	}
+	cout << "结点" << num << ": " << p->data << endl;
+	
+}
+void print2(LinkList &L)
+{
+	LinkList p;
+	p=L;
+	int a,num=0;
+	cout << "所有学生成绩如下: " << endl;
+	while(p->next)
+	{
+		a=p->data;
+		cout << a << ' ';
+		if(a<60)
+			num++;
+		p=p->next;
+	}
+	cout << p->data << endl;
+	cout << "不及格人数: ";
+	cout << num << endl;
+	
+}
+
+
+int main()
+{
+	/*
+	//1
+	LinkList L;
+	cout << "请输入单链表长度: ";
+	int i;
+	cin >> i;
+	cout << "请分别输入单链表数据: ";
+	creat(L,i);
+	cout << "单链表内容如下" << endl;
+	print1(L);
+	cout << "最大值结点序号: " << Max(L) << endl;
+	*/
+
+	/*
+	//2
+	LinkList L;
+	cout << "请输入学生人数: ";
+	int i;
+	cin >> i;
+	cout << "请分别输入学生成绩: ";
+	creat(L,i);
+	print2(L);
+	*/
+
+	
+	
+}
