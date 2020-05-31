@@ -1,0 +1,130 @@
+#include <iostream>
+using namespace std;
+#include <cmath>
+
+
+#define StackSize 100
+typedef char ElemType;
+
+typedef struct
+    {
+       ElemType data[StackSize];
+       int top;
+    }SqStack;
+int trans(int d,int b,char string[])  //string用于存放转换后的字符串
+//d为那个10进制数 b为进制 string是转变后的进制数 比如‘A’
+ {
+      SqStack st;
+      char ch;
+      int r,i=0;
+      st.top=-1;      // 栈初始化
+      if (b<=1||b>36 || b==10)  // 2≤b≤36且不为10
+      {
+        printf(" b is Error\n"); return 0; 
+      }
+      while(d!=0)
+      {
+        r=d%b; //求余数
+        ch=r+(r<10?'0':'A'-10);  // 将余数转换为相应的字符
+        st.top++;  st.data[st.top]=ch;   // 进栈
+        d/=b;
+       }
+      while (st.top!=-1)
+      {
+        string [i++]=st.data[st.top];   //将出栈的字符放入字符数组string
+        st.top--;
+       }
+       string [i]='\0';     //加入字符串结束标志
+       return  1;
+}
+void main()
+{
+  char str[10];
+int d,b,t;
+  printf("input d (d≥0)please:");   // 输入待转换的整数
+  scanf("%d",&d);           
+  printf ("input b (2≤b≤36) please:"); // 输入待转换的进制
+  scanf("%d",&b);
+ t=trans(d,b,str);          // 调用转换函数
+ if (t==0) printf("Error!");
+     else printf("%s\n",str);      // 输出转换结果字符串
+ }
+
+3.3.3 链栈的应用举例
+【例3.4】回文指的是一个字符串从前面读和从后面读都一样，编写一个算法判断一个字符串是否为回文。并给出完整的程序。
+解题思路：先定义链栈的类型，并根据题意将ElemType设为char型；然后设计一个算法huiwei来完成判断；最后在主函数中调用实现判断算法的函数。
+算法huiwei的思路：先将字符串从头到尾的各个字符依次放入一个链栈中；然后依次取栈顶到栈底的各个字符与字符串从头到尾的各个字符比较，如果两者不同，则表明该字符串不是回文，若相同，则继续比较；如果直到比较完毕相互之间都相匹配，则表明该字符串是回文。
+
+#include <iostream>
+using namespace std;
+#include <cmath>
+typedef char ElemType;
+typedef  struct  stnode
+      {
+          ElemType   data;
+          struct stnode  *next;
+      }StNode,*LinkStack;
+
+int huiwen(char str[])
+// 判断给定字符串str是否为回文，若是，则返回1，否则返回0
+{
+int i=0;
+char ch;
+StNode *sl=NULL,*p;  // 链栈初始化
+while((ch=str[i++]!='\0')  // 所有字符依次进栈
+{
+        p=(StNode *)malloc(siseof(StNode));
+        //new StNode
+        p->data=ch;
+        p->next=sl;
+        sl=p;
+//头插法
+}
+i=0;
+while(sl!=NULL)   // 栈不为空
+{
+       p=sl;
+       ch=p->data;   // 栈顶元素出栈
+       sl=sl->next;
+       free(p);
+       if(ch!=str[i++])   // 出栈元素与字符串中相应字符不相等
+       return 0;
+}
+return 1;
+}
+
+/*
+InitStack//初始化函数
+int huiwen(char str[])
+{
+int i=0;
+LinkStack s;
+InitStack()
+while(str[i]!='\0')
+        i++;
+i=i/2;
+for(int j=0;j<i;j++)
+{
+        Push(s,str[j]);
+}
+while(i>0)
+{
+       Pop(s,e);
+	if(e!=str[i]) return 0;break;
+	else i--;
+}
+return 1;
+}
+*/
+
+
+void main()
+{
+char string[20];
+     int hw;
+ printf("input a string:");
+     scanf("%s",sting);
+     hw=huiwen(string);        //调用 huiwei完成判断
+ if(hw) printf("The string is HUIWEN.");  //输出判断结果
+     else  printf("The string is not HUIWEN.");
+}
