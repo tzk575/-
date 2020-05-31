@@ -1,0 +1,115 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+#include <map>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+#include<malloc.h>
+#include<iomanip>
+using namespace std;
+
+typedef char ElemType;
+typedef struct Bnode
+{
+    ElemType data;
+    struct Bnode* LChild, * RChild;
+} BNode, * BTree;
+
+void InitList(BTree &BT)
+{
+    BT = NULL;
+}
+void preCreateBTree(BTree& BT)
+{
+	InitList(BT);
+    char data;
+    cin >> data;
+    if (data == '#')
+    	BT = NULL;
+    else
+    {
+    	BT = (BTree)malloc(sizeof(Bnode));
+        BT->data = data;
+        preCreateBTree(BT->LChild);
+        preCreateBTree(BT->RChild);
+    }
+}
+
+void PreOrder(BTree T)
+{
+    if (T != NULL)
+    {
+        cout<< T->data<<' ';
+        PreOrder(T->LChild);
+        PreOrder(T->RChild);
+    }
+}
+void InOrder(BTree T)
+{
+    if (T!= NULL)
+    {
+        InOrder(T->LChild);
+        cout<< T->data<<' ';
+        InOrder(T->RChild);       
+    }
+}
+void PostOrder(BTree T)
+{
+    if (T != NULL)
+    {
+        PostOrder(T->LChild);
+        PostOrder(T->RChild);
+        cout<< T->data<<' ';
+    }
+}
+
+int LeafCount(BTree T)
+{
+    int LeftLeaf,RightLeaf;
+    if (T == NULL) return 0;
+    else if (T->LChild == NULL && T->RChild == NULL)
+        return 1;
+    else
+    {
+        LeftLeaf = LeafCount(T->LChild);
+        RightLeaf = LeafCount(T->RChild);
+        return(LeftLeaf+RightLeaf);
+    }
+}
+
+int main()
+{
+
+	//1
+	/*
+    BTree T;
+    cout << "请输入二叉树先序序列,叶子结点以#结束: " << endl;
+    preCreateBTree(T);
+
+    cout << "二叉树的先序序列为：" << endl;
+    PreOrder(T);
+    cout << endl;
+
+    cout << "二叉树的中序序列为" << endl;
+    InOrder(T);
+    cout << endl;
+
+    cout << "二叉树的后序序列为" << endl;
+    PostOrder(T);
+    cout << endl;
+    */
+
+    //2
+    /*
+	BTree T;
+    cout << "请输入二叉树先序序列,叶子结点以#结束: " << endl;
+    preCreateBTree(T);
+    int leaf;
+    leaf=LeafCount(T);
+    cout <<"二叉树中的叶子结点数: " << leaf << endl;
+    */
+
+}
