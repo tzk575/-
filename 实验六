@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+#include <map>
+#include <math.h>
+#include <time.h>
+#include <iomanip>
+#include <stdlib.h>
+using namespace std;
+
+#define Inf 32767
+#define Maxvex 100
+typedef char vexType;
+typedef int arcType;
+
+typedef struct
+{
+	int vexnum,arcnum;
+	vexType vexs[Maxvex];
+	arcType arcs[Maxvex][Maxvex];
+}AMGraph;
+
+int LocateVex(AMGraph G,vexType v)
+{
+	int i;
+	for (i = 0; i < G.vexnum; ++i)
+		if(v == G.vexs[i])
+			return i;
+
+	return -1;
+}
+void CreatAM(AMGraph &G)
+{
+	vexType v1,v2;
+	arcType w;
+	int i,j;
+	cout << "请分别输入顶点数和边数: ";
+	cin >> G.vexnum >> G.arcnum;
+	//cout << endl << G.vexnum << ' ' << G.arcnum << endl;
+	cout << "请分别输入顶点信息: " << endl;
+	for(int i=0;i<G.vexnum;i++)
+		cin >> G.vexs[i];
+	for(int i=0;i<G.vexnum;i++)
+		for(int j=0;j<G.vexnum;j++)
+			G.arcs[i][j]=Inf;
+
+	for(int k=0;k<G.arcnum;k++)
+	{
+		cout << "请输入分别一条边所连接的两个结点和边的权值: ";
+		cin >> v1 >> v2 >> w;
+		i=LocateVex(G,v1);
+		j=LocateVex(G,v2);
+		G.arcs[i][j]=w;
+		G.arcs[j][i]=w;
+	}
+}
+void Degree(AMGraph G,int *deg)
+{
+	for(int i=0;i<G.vexnum;i++)
+	{
+		int count=0;
+		for(int j=0;j<G.vexnum;j++)
+			if(G.arcs[i][j]!=Inf)
+				count++;
+		*(deg+i)=count;
+	}
+}
+void print(AMGraph G)
+{
+	int deg[G.vexnum];
+	cout << "邻接矩阵如下: "<< endl;
+	for(int i=0;i<G.vexnum;i++)
+	{
+		for(int j=0;j<G.vexnum;j++)
+			cout << setw(6) << G.arcs[i][j];
+		cout << endl;
+	}
+	cout << endl;
+	Degree(G,deg);
+	cout << "各个结点的度数： ";
+	for (int i = 0; i < G.vexnum; ++i)
+	{
+		cout << deg[i] << ' ';
+	}
+	cout << endl;
+}
+//arcnum
+
+int main()
+{
+	//1
+	AMGraph G;
+	CreatAM(G);
+	cout << endl;
+	print(G);
+}
